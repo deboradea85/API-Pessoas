@@ -1,0 +1,14 @@
+C:\Projetos\2021\API-Pessoas\Pessoas.Service\bin\Debug\netcoreapp3.1\Pessoas.Service.deps.json
+C:\Projetos\2021\API-Pessoas\Pessoas.Service\bin\Debug\netcoreapp3.1\Pessoas.Service.dll
+C:\Projetos\2021\API-Pessoas\Pessoas.Service\bin\Debug\netcoreapp3.1\Pessoas.Service.pdb
+C:\Projetos\2021\API-Pessoas\Pessoas.Service\obj\Debug\netcoreapp3.1\Pessoas.Service.csprojAssemblyReference.cache
+C:\Projetos\2021\API-Pessoas\Pessoas.Service\obj\Debug\netcoreapp3.1\Pessoas.Service.AssemblyInfoInputs.cache
+C:\Projetos\2021\API-Pessoas\Pessoas.Service\obj\Debug\netcoreapp3.1\Pessoas.Service.AssemblyInfo.cs
+C:\Projetos\2021\API-Pessoas\Pessoas.Service\obj\Debug\netcoreapp3.1\Pessoas.Service.csproj.CoreCompileInputs.cache
+C:\Projetos\2021\API-Pessoas\Pessoas.Service\obj\Debug\netcoreapp3.1\Pessoas.Service.dll
+C:\Projetos\2021\API-Pessoas\Pessoas.Service\obj\Debug\netcoreapp3.1\Pessoas.Service.pdb
+C:\Projetos\2021\API-Pessoas\Pessoas.Service\bin\Debug\netcoreapp3.1\Pessoas.Domain.dll
+C:\Projetos\2021\API-Pessoas\Pessoas.Service\bin\Debug\netcoreapp3.1\Pessoas.Repository.dll
+C:\Projetos\2021\API-Pessoas\Pessoas.Service\bin\Debug\netcoreapp3.1\Pessoas.Domain.pdb
+C:\Projetos\2021\API-Pessoas\Pessoas.Service\bin\Debug\netcoreapp3.1\Pessoas.Repository.pdb
+C:\Projetos\2021\API-Pessoas\Pessoas.Service\obj\Debug\netcoreapp3.1\Pessoas.Service.csproj.CopyComplete

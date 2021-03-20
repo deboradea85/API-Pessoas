@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "Mp1NdVU11KzAAfEKmFHvrznMlzyiXpCRNl6FfspoL8bmWq1dwryRDs8zURpvNRN16HlezW3/its1IF6iEwWDhg==",
+  "success": true,
+  "projectFilePath": "C:\\Projetos\\2021\\API-Pessoas\\Pessoas.API\\Pessoas.API\\Pessoas.API.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\debor\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.10.9\\microsoft.visualstudio.azure.containers.tools.targets.1.10.9.nupkg.sha512"
+  ],
+  "logs": []
+}
