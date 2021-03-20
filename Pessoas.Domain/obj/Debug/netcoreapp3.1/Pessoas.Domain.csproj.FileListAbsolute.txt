@@ -1,7 +1,6 @@
 C:\Projetos\2021\API-Pessoas\Pessoas.Domain\bin\Debug\netcoreapp3.1\Pessoas.Domain.deps.json
 C:\Projetos\2021\API-Pessoas\Pessoas.Domain\bin\Debug\netcoreapp3.1\Pessoas.Domain.dll
 C:\Projetos\2021\API-Pessoas\Pessoas.Domain\bin\Debug\netcoreapp3.1\Pessoas.Domain.pdb
-C:\Projetos\2021\API-Pessoas\Pessoas.Domain\obj\Debug\netcoreapp3.1\Pessoas.Domain.csprojAssemblyReference.cache
 C:\Projetos\2021\API-Pessoas\Pessoas.Domain\obj\Debug\netcoreapp3.1\Pessoas.Domain.AssemblyInfoInputs.cache
 C:\Projetos\2021\API-Pessoas\Pessoas.Domain\obj\Debug\netcoreapp3.1\Pessoas.Domain.AssemblyInfo.cs
 C:\Projetos\2021\API-Pessoas\Pessoas.Domain\obj\Debug\netcoreapp3.1\Pessoas.Domain.csproj.CoreCompileInputs.cache
