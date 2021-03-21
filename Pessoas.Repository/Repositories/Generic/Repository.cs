@@ -66,10 +66,8 @@ namespace Pessoas.Repository.Repositories.Generic
             return item;
         }
 
-        public async Task Delete(Guid id)
+        public async Task Delete(T item)
         {
-            var item = await dataSet.FindAsync(id);
-
             if (item != null)
             {          
                 _context.Entry(item).State = EntityState.Detached;

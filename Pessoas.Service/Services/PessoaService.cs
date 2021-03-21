@@ -70,7 +70,7 @@ namespace Pessoas.Service.Services
 
             if (pessoa.Result != null)
             {
-                await _repository.Delete(pessoa.Result.Id);
+                await _repository.Delete(pessoa.Result);
             }
         }
     }

@@ -13,6 +13,6 @@ namespace Pessoas.Repository.Interfaces.Generic
         Task<T> GetById(Guid id);
         Task<T> Create(T item);
         Task<T> Update(T item);
-        Task Delete(Guid id);
+        Task Delete(T item);
     }
 }
