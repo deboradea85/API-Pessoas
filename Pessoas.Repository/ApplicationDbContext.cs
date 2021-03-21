@@ -3,7 +3,7 @@ using Pessoas.Domain.Models;
 
 namespace Pessoas.Repository
 {
-    public class AplicationDbContext : DbContext
+    public class ApplicationDbContext : DbContext
     {
         public DbSet<Pessoa> Pessoas { get; set; }
 

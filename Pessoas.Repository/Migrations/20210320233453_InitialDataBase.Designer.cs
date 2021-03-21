@@ -9,7 +9,7 @@ using Pessoas.Repository;
 
 namespace Pessoas.Repository.Migrations
 {
-    [DbContext(typeof(AplicationDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20210320233453_InitialDataBase")]
     partial class InitialDataBase
     {
