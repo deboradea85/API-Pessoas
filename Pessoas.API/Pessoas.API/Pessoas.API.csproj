@@ -7,15 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!--<PackageReference Include="Microsoft.AspnetCOre.App"/>-->
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.4">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Pessoas.Domain\Pessoas.Domain.csproj" />
     <ProjectReference Include="..\..\Pessoas.Repository\Pessoas.Repository.csproj" />
     <ProjectReference Include="..\..\Pessoas.Service\Pessoas.Service.csproj" />
