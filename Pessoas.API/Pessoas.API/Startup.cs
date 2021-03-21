@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Pessoas.Repository;
 using Pessoas.Repository.Interfaces.Generic;
 using Pessoas.Repository.Repositories.Generic;
@@ -25,6 +27,21 @@ namespace Pessoas.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApiVersioning();
+            services.AddSwaggerGen(c => {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "API para Cadastro de Pessoas",
+                    Version = "v1",
+                    Description = "Serviço para manutenção de cadastro de pessoas",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Débora Araújo",
+                        Email = "debora_dea@hotmail.com",
+                        Url = new System.Uri("https://github.com/deboradea85")
+                    }
+
+                });
+            });
             services.AddScoped<IPessoaService, PessoaService>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -42,6 +59,16 @@ namespace Pessoas.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("v1/swagger.json", "Serviço para Manutenção de Cadastro de Pessoas");
+            });
+
+            var option = new RewriteOptions();
+            option.AddRedirect("^$", "swagger");
+            app.UseRewriter(option);
 
             app.UseAuthorization();
 
