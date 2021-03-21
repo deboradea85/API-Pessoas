@@ -2,10 +2,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Pessoas.Repository;
 using Pessoas.Repository.Interfaces.Generic;
 using Pessoas.Repository.Repositories.Generic;
 using Pessoas.Service.Interfaces;
@@ -31,6 +33,7 @@ namespace Pessoas.API
         {
             services.AddScoped<IPessoaService, PessoaService>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
         }
 

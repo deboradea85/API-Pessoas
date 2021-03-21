@@ -21,15 +21,6 @@ namespace Pessoas.Service.Services
 
         public async Task<IEnumerable<Pessoa>> ObterPessoas()
         {
-            //return Enumerable.Range(1, 5).Select(index => new Pessoa
-            //{
-            //    Nome = "Debora",
-            //    Rg = 9999999999,
-            //    Cpf = 99999999999,
-            //    Telefone = new Telefone { Tipo = "Celular", Numero = 99999999999999999 },
-            //    Endereco = new Endereco { Cep = 99999999, Logradouro = "Rua das Flores amarelas", Numero = 598698545, Complemento = "Quadra 27", Bairro = "Jardim das Margaridas", Municipio = "Salvadror", UF = "BA" }
-            //})
-            //.ToArray();
             return await _repository.ObterTodos();
         }
 
