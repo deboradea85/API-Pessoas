@@ -3,6 +3,9 @@ using Pessoas.Domain.Models;
 using Pessoas.Repository.Interfaces.Generic;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Pessoas.Repository.Repositories.Generic
@@ -17,34 +20,60 @@ namespace Pessoas.Repository.Repositories.Generic
             _context = context;
             dataSet = _context.Set<T>();
         }
-        public async Task<IEnumerable<T>> ObterTodos()
+
+        public async Task<IEnumerable<T>> GetAllFilterJoin(Expression<Func<T, bool>> filter, string[] children)
         {
-            var itens = await dataSet.ToListAsync();
-            return (itens);
+            try
+            {
+                IQueryable<T> query = dataSet;
+                foreach (string entity in children)
+                {
+                    query = query.Include(entity);
+
+                }
+                return await query.AsNoTracking().Where(filter).ToListAsync();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
-        public async Task<T> ObterPorId(Guid id)
+
+        public async Task<IEnumerable<T>> GetAll()
         {
-            var item = await dataSet.FirstOrDefaultAsync(p => p.Id == id);
+            var items = await dataSet.AsNoTracking().ToListAsync();
+            return (items);
+        }
+
+        public async Task<T> GetById(Guid id)
+        {
+            var item = await dataSet.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
             return item;
         }
-        public async Task<T> Criar(T item)
+
+        public async Task<T> Create(T item)
         {
             dataSet.Add(item);
             await _context.SaveChangesAsync();
             return item;
         }
-        public async Task<T> Atualizar(T item)
+
+        public async Task<T> Update(T item)
         {
+            _context.Attach(item);
             _context.Entry(item).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return item;
         }
-        public async Task Excluir(Guid id)
+
+        public async Task Delete(Guid id)
         {
-            var item = await dataSet.FirstOrDefaultAsync(p => p.Id == id);
+            var item = await dataSet.FindAsync(id);
 
             if (item != null)
-            {
+            {          
+                _context.Entry(item).State = EntityState.Detached;
+                _context.Attach(item);
                 dataSet.Remove(item);
                 await _context.SaveChangesAsync();
             }

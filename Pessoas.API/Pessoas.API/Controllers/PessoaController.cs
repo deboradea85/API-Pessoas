@@ -31,21 +31,30 @@ namespace Pessoas.API.Controllers
             return Ok(await _pessoaService.ObterPessoas());
         }
 
-        [HttpGet("{id}", Name = "GetById")]
+        [HttpGet("{cpf:long}", Name = "GetById")]
         [ProducesResponseType((200), Type = typeof(Pessoa))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
-        public async Task<ActionResult<Pessoa>> GetById(Guid id)
+        public async Task<ActionResult<Pessoa>> GetByCPF(long cpf)
         {
-            var pessoa = await _pessoaService.ObterPessoaPorId(id);
-
-            if (pessoa == null)
+            try
             {
-                return NotFound();
-            }
+                var pessoa = await _pessoaService.ObterPessoaPorCPF(cpf);
 
-            return Ok(pessoa);
+                if (pessoa == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(pessoa);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
         }
         [HttpPost]
         [ProducesResponseType((200), Type = typeof(Pessoa))]
@@ -61,35 +70,35 @@ namespace Pessoas.API.Controllers
             return Ok(pdvCreated);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{cpf:long}")]
         [ProducesResponseType((200), Type = typeof(Pessoa))]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
-        public async Task<ActionResult> Put(Guid id, [FromBody] Pessoa pessoa)
+        public async Task<ActionResult> PutByCPF(long cpf, [FromBody] Pessoa pessoa)
         {
 
             if (pessoa == null) return BadRequest();
 
-            var pessoaAualizada = await _pessoaService.AtualizarPessoa(id, pessoa);
+            var pessoaAualizada = await _pessoaService.AtualizarPessoaPorCPF(pessoa);
 
             return Ok(pessoaAualizada);
         }
 
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{cpf:long}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
-        public async Task<ActionResult> Delete(Guid id)
+        public async Task<ActionResult> DeleteByCPF(long cpf)
         {
-            var pessoa = await _pessoaService.ObterPessoaPorId(id);
+            var pessoa = await _pessoaService.ObterPessoaPorCPF(cpf);
 
             if (pessoa == null)
             {
                 return NotFound();
             }
 
-            await _pessoaService.ExcluirPessoa(id);
+            await _pessoaService.ExcluirPessoaPorCPF(cpf);
             return NoContent();
         }
     }

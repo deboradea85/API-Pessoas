@@ -13,40 +13,64 @@ namespace Pessoas.Service.Services
     {
 
         private readonly IRepository<Pessoa> _repository;
+        private readonly string[] children;
 
         public PessoaService(IRepository<Pessoa> repository)
         {
             _repository = repository;
+            children = new string[] { "Endereco", "Telefone" };
         }
 
         public async Task<IEnumerable<Pessoa>> ObterPessoas()
-        {
-            return await _repository.ObterTodos();
+        {        
+            return await _repository.GetAllFilterJoin(p => p.Id != null, children);
         }
 
-        public async Task<Pessoa> ObterPessoaPorId(Guid idPessoa)
+        public async Task<Pessoa> ObterPessoaPorCPF(long cpf)
         {
-            return await _repository.ObterPorId(idPessoa);
+            var pessoas = await _repository.GetAllFilterJoin(p => p.Cpf == cpf, children);
+            return pessoas.FirstOrDefault();
         }
 
         public async Task<Pessoa> CriarPessoa(Pessoa pessoa)
         {
-            return await _repository.Criar(pessoa);
-        }
+            var pessoaCPF = ObterPessoaPorCPF(pessoa.Cpf);
 
-        public async Task<Pessoa> AtualizarPessoa(Guid idPessoa, Pessoa pessoa)
-        {
-            pessoa.Id = idPessoa;
-            return await _repository.Atualizar(pessoa);
-        }
-
-        public async Task ExcluirPessoa(Guid idPessoa)
-        {
-            var pessoa = _repository.ObterPorId(idPessoa);
-
-            if (pessoa != null)
+            if (pessoaCPF.Result == null)
             {
-                await _repository.Excluir(idPessoa);
+                return await _repository.Create(pessoa);
+
+            }
+            else
+            {
+                throw new Exception("Já existe Pessoa com este CPF");
+            }
+            
+        }
+
+        public async Task<Pessoa> AtualizarPessoaPorCPF(Pessoa pessoa)
+        {
+            var pessoaAtualizar = ObterPessoaPorCPF(pessoa.Cpf);
+            if (pessoaAtualizar.Result != null)
+            {
+                pessoa.Id = pessoaAtualizar.Result.Id;
+                return await _repository.Update(pessoa);
+            }
+            else
+            {
+                throw new Exception("A pessoa a ser atualizada não foi encontrada");
+            }
+            
+            
+        }
+
+        public async Task ExcluirPessoaPorCPF(long cpf)
+        {
+            var pessoa = ObterPessoaPorCPF(cpf);
+
+            if (pessoa.Result != null)
+            {
+                await _repository.Delete(pessoa.Result.Id);
             }
         }
     }

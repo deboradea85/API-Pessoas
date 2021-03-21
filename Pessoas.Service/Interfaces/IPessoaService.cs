@@ -8,9 +8,9 @@ namespace Pessoas.Service.Interfaces
     public interface IPessoaService
     {
         Task<IEnumerable<Pessoa>> ObterPessoas();
-        Task<Pessoa> ObterPessoaPorId(Guid idPessoa);
+        Task<Pessoa> ObterPessoaPorCPF(long cpf);
         Task<Pessoa> CriarPessoa(Pessoa pessoa);
-        Task<Pessoa> AtualizarPessoa(Guid idPessoa, Pessoa pessoa);
-        Task ExcluirPessoa(Guid idPessoa);
+        Task<Pessoa> AtualizarPessoaPorCPF(Pessoa pessoa);
+        Task ExcluirPessoaPorCPF(long cpf);
     }
 }
