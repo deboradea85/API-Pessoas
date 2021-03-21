@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 
 namespace Pessoas.API.Controllers
 {
+    [ApiVersion("1")]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]/v{version:apiVersion}")]
     public class PessoaController : ControllerBase
     {
 
