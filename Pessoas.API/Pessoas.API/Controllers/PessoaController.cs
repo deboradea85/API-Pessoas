@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Pessoas.Domain.Models;
 using Pessoas.Service.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Pessoas.API.Controllers
@@ -32,11 +30,12 @@ namespace Pessoas.API.Controllers
             return Ok(await _pessoaService.ObterPessoas());
         }
 
-        [HttpGet("{cpf:long}", Name = "GetById")]
+        [HttpGet("{cpf:long}", Name = "GetByCPF")]
         [ProducesResponseType((200), Type = typeof(Pessoa))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult<Pessoa>> GetByCPF(long cpf)
         {
             try
@@ -50,25 +49,30 @@ namespace Pessoas.API.Controllers
 
                 return Ok(pessoa);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                return BadRequest(new { type = ex.HelpLink ?? ex.GetType().Name, title = "Erro: " + ex.Message, status = 400, traceId = ex.HResult });
             }
-           
+
         }
         [HttpPost]
-        [ProducesResponseType((200), Type = typeof(Pessoa))]
+        [ProducesResponseType((201), Type = typeof(Pessoa))]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         public async Task<ActionResult> Post([FromBody] Pessoa pessoa)
         {
+            try
+            {
+                if (pessoa == null) return BadRequest();
 
-            if (pessoa == null) return BadRequest();
+                var pdvCreated = await _pessoaService.CriarPessoa(pessoa);
 
-            var pdvCreated = await _pessoaService.CriarPessoa(pessoa);
-
-            return Ok(pdvCreated);
+                return new CreatedAtRouteResult("GetByCPF", pdvCreated);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { type = ex.HelpLink ?? ex.GetType().Name, title = "Erro: " + ex.Message, status = 404, traceId = ex.HResult });
+            }
         }
 
         [HttpPut("{cpf:long}")]
@@ -77,12 +81,19 @@ namespace Pessoas.API.Controllers
         [ProducesResponseType(401)]
         public async Task<ActionResult> PutByCPF(long cpf, [FromBody] Pessoa pessoa)
         {
+            try
+            {
 
-            if (pessoa == null) return BadRequest();
+                if (pessoa == null) return BadRequest();
 
-            var pessoaAualizada = await _pessoaService.AtualizarPessoaPorCPF(pessoa);
+                var pessoaAualizada = await _pessoaService.AtualizarPessoaPorCPF(pessoa);
 
-            return Ok(pessoaAualizada);
+                return Ok(pessoaAualizada);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { type = ex.HelpLink ?? ex.GetType().Name, title = "Erro: " + ex.Message, status = 404, traceId = ex.HResult });
+            }
         }
 
 
@@ -92,15 +103,22 @@ namespace Pessoas.API.Controllers
         [ProducesResponseType(401)]
         public async Task<ActionResult> DeleteByCPF(long cpf)
         {
-            var pessoa = await _pessoaService.ObterPessoaPorCPF(cpf);
-
-            if (pessoa == null)
+            try
             {
-                return NotFound();
-            }
+                var pessoa = await _pessoaService.ObterPessoaPorCPF(cpf);
 
-            await _pessoaService.ExcluirPessoaPorCPF(cpf);
-            return NoContent();
+                if (pessoa == null)
+                {
+                    return NotFound();
+                }
+
+                await _pessoaService.ExcluirPessoaPorCPF(cpf);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { type = ex.HelpLink ?? ex.GetType().Name, title = "Erro: " + ex.Message, status = 404, traceId = ex.HResult });
+            }
         }
     }
 }
