@@ -12,23 +12,27 @@ namespace Pessoas.Service.Services
     public class PessoaService : IPessoaService
     {
 
-        private readonly IRepository<Pessoa> _repository;
+        private readonly IRepository<Pessoa> _repositoryPessoa;
+        private readonly IRepository<Endereco> _repositoryEndereco;
+        private readonly IRepository<Telefone> _repositoryTelefone;
         private readonly string[] children;
 
-        public PessoaService(IRepository<Pessoa> repository)
+        public PessoaService(IRepository<Pessoa> repositoryPessoa, IRepository<Endereco> repositoryEndereco, IRepository<Telefone> repositoryTelefone)
         {
-            _repository = repository;
+            _repositoryPessoa = repositoryPessoa;
+            _repositoryEndereco = repositoryEndereco;
+            _repositoryTelefone = repositoryTelefone;
             children = new string[] { "Endereco", "Telefone" };
         }
 
         public async Task<IEnumerable<Pessoa>> ObterPessoas()
-        {        
-            return await _repository.GetAllFilterJoin(p => p.Id != null, children);
+        {
+            return await _repositoryPessoa.GetAll(children);
         }
 
         public async Task<Pessoa> ObterPessoaPorCPF(long cpf)
         {
-            var pessoas = await _repository.GetAllFilterJoin(p => p.Cpf == cpf, children);
+            var pessoas = await _repositoryPessoa.GetAllFilterJoin(p => p.Cpf == cpf, children);
             return pessoas.FirstOrDefault();
         }
 
@@ -38,14 +42,14 @@ namespace Pessoas.Service.Services
 
             if (pessoaCPF.Result == null)
             {
-                return await _repository.Create(pessoa);
+                return await _repositoryPessoa.Create(pessoa);
 
             }
             else
             {
                 throw new Exception("Já existe Pessoa com este CPF");
             }
-            
+
         }
 
         public async Task<Pessoa> AtualizarPessoaPorCPF(Pessoa pessoa)
@@ -54,14 +58,23 @@ namespace Pessoas.Service.Services
             if (pessoaAtualizar.Result != null)
             {
                 pessoa.Id = pessoaAtualizar.Result.Id;
-                return await _repository.Update(pessoa);
+               
+                pessoa.Telefone.Id = pessoaAtualizar.Result.Telefone.Id;
+                pessoa.Telefone.PessoaTelefoneId = pessoaAtualizar.Result.Id;
+
+                pessoa.Endereco.Id = pessoaAtualizar.Result.Endereco.Id;
+                pessoa.Endereco.PessoaEnderecoId = pessoaAtualizar.Result.Id;
+
+                var pessoaUpdated = _repositoryPessoa.Update(pessoa).Result;
+                var enderecoUpdated = _repositoryEndereco.Update(pessoa.Endereco).Result;
+                var telefoneUpdated = _repositoryTelefone.Update(pessoa.Telefone).Result;
+             
+                return pessoa;
             }
             else
             {
                 throw new Exception("A pessoa a ser atualizada não foi encontrada");
             }
-            
-            
         }
 
         public async Task ExcluirPessoaPorCPF(long cpf)
@@ -70,7 +83,7 @@ namespace Pessoas.Service.Services
 
             if (pessoa.Result != null)
             {
-                await _repository.Delete(pessoa.Result);
+                await _repositoryPessoa.Delete(pessoa.Result);
             }
         }
     }

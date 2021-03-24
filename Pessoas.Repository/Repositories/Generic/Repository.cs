@@ -3,7 +3,6 @@ using Pessoas.Domain.Models;
 using Pessoas.Repository.Interfaces.Generic;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Validation;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -24,14 +23,8 @@ namespace Pessoas.Repository.Repositories.Generic
         public async Task<IEnumerable<T>> GetAllFilterJoin(Expression<Func<T, bool>> filter, string[] children)
         {
             try
-            {
-                IQueryable<T> query = dataSet;
-                foreach (string entity in children)
-                {
-                    query = query.Include(entity);
-
-                }
-                return await query.AsNoTracking().Where(filter).ToListAsync();
+            {               
+                return await QueryJoin(children).AsNoTracking().Where(filter).ToListAsync();
             }
             catch (Exception e)
             {
@@ -39,9 +32,19 @@ namespace Pessoas.Repository.Repositories.Generic
             }
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        private IQueryable<T> QueryJoin (string[] children)
         {
-            var items = await dataSet.AsNoTracking().ToListAsync();
+            IQueryable<T> query = dataSet;
+            foreach (string entity in children)
+            {
+                query = query.Include(entity);
+            }
+            return query;
+        }
+
+        public async Task<IEnumerable<T>> GetAll(string[] children)
+        {
+            var items = await QueryJoin(children).AsNoTracking().ToListAsync();
             return (items);
         }
 
@@ -62,7 +65,7 @@ namespace Pessoas.Repository.Repositories.Generic
         {
             _context.Attach(item);
             _context.Entry(item).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+             await _context.SaveChangesAsync();
             return item;
         }
 
@@ -75,6 +78,11 @@ namespace Pessoas.Repository.Repositories.Generic
                 dataSet.Remove(item);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public void Save()
+        {
+            _context.SaveChangesAsync();
         }
     }
 }

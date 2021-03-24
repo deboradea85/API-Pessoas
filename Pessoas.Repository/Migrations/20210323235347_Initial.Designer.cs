@@ -10,8 +10,8 @@ using Pessoas.Repository;
 namespace Pessoas.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210320233453_InitialDataBase")]
-    partial class InitialDataBase
+    [Migration("20210323235347_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,10 +45,16 @@ namespace Pessoas.Repository.Migrations
                     b.Property<int>("Numero")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("PessoaEnderecoId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("UF")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PessoaEnderecoId")
+                        .IsUnique();
 
                     b.ToTable("Endereco");
                 });
@@ -62,25 +68,15 @@ namespace Pessoas.Repository.Migrations
                     b.Property<long>("Cpf")
                         .HasColumnType("bigint");
 
-                    b.Property<Guid?>("EnderecoId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Nome")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("Rg")
                         .HasColumnType("bigint");
 
-                    b.Property<Guid?>("TelefoneId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("EnderecoId");
-
-                    b.HasIndex("TelefoneId");
-
-                    b.ToTable("Pessoas");
+                    b.ToTable("Pessoa");
                 });
 
             modelBuilder.Entity("Pessoas.Domain.Models.Telefone", b =>
@@ -92,24 +88,44 @@ namespace Pessoas.Repository.Migrations
                     b.Property<long>("Numero")
                         .HasColumnType("bigint");
 
+                    b.Property<Guid>("PessoaTelefoneId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Tipo")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PessoaTelefoneId")
+                        .IsUnique();
+
                     b.ToTable("Telefone");
+                });
+
+            modelBuilder.Entity("Pessoas.Domain.Models.Endereco", b =>
+                {
+                    b.HasOne("Pessoas.Domain.Models.Pessoa", "Pessoa")
+                        .WithOne("Endereco")
+                        .HasForeignKey("Pessoas.Domain.Models.Endereco", "PessoaEnderecoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pessoa");
+                });
+
+            modelBuilder.Entity("Pessoas.Domain.Models.Telefone", b =>
+                {
+                    b.HasOne("Pessoas.Domain.Models.Pessoa", "Pessoa")
+                        .WithOne("Telefone")
+                        .HasForeignKey("Pessoas.Domain.Models.Telefone", "PessoaTelefoneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pessoa");
                 });
 
             modelBuilder.Entity("Pessoas.Domain.Models.Pessoa", b =>
                 {
-                    b.HasOne("Pessoas.Domain.Models.Endereco", "Endereco")
-                        .WithMany()
-                        .HasForeignKey("EnderecoId");
-
-                    b.HasOne("Pessoas.Domain.Models.Telefone", "Telefone")
-                        .WithMany()
-                        .HasForeignKey("TelefoneId");
-
                     b.Navigation("Endereco");
 
                     b.Navigation("Telefone");

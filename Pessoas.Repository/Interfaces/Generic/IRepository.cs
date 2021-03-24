@@ -9,10 +9,11 @@ namespace Pessoas.Repository.Interfaces.Generic
     public interface IRepository<T> where T : Base
     {
         Task<IEnumerable<T>> GetAllFilterJoin(Expression<Func<T, bool>> filter, string[] children);
-        Task<IEnumerable<T>> GetAll();
+        Task<IEnumerable<T>> GetAll(string[] children);
         Task<T> GetById(Guid id);
         Task<T> Create(T item);
         Task<T> Update(T item);
         Task Delete(T item);
+        void Save();
     }
 }

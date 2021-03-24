@@ -9,7 +9,7 @@ namespace Pessoas.API.Controllers
 {
     [ApiVersion("1")]
     [ApiController]
-    [Route("api/[controller]/v{version:apiVersion}")]
+    [Route("api/pessoas/v{version:apiVersion}")]
     public class PessoaController : ControllerBase
     {
 
@@ -85,7 +85,7 @@ namespace Pessoas.API.Controllers
             {
 
                 if (pessoa == null) return BadRequest();
-
+                pessoa.Cpf = cpf;
                 var pessoaAualizada = await _pessoaService.AtualizarPessoaPorCPF(pessoa);
 
                 return Ok(pessoaAualizada);
