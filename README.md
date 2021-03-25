@@ -7,12 +7,12 @@ O projeto foi desenvolvido utilizando:
   
 ### Tecnologias
 
-* [C#](https://docs.microsoft.com/pt-br/dotnet/csharp/) - Linguagem de programação
+* [C#](https://docs.microsoft.com/pt-br/dotnet/csharp/) - linguagem de programação
 * [.Net Core 3.1](https://docs.microsoft.com/pt-br/dotnet/core/whats-new/dotnet-core-3-1) -  uma plataforma de desenvolvimento de código aberto de uso geral mantida pela Microsoft e pela comunidade .NET
 * [Entity Framework Core](https://docs.microsoft.com/pt-br/dotnet/core/whats-new/dotnet-core-3-1) -  mapeador de banco de dados de objeto para .NET
 * [SQL Server Express LocalDB](https://docs.microsoft.com/pt-br/sql/database-engine/configure-windows/sql-server-express-localdb?view=sql-server-ver15#description) - recurso do SQL Server Express para utilização de mecanismos de Banco de Dados 
 * [Swagger](https://swagger.io/) - uma plataforma para descrição, consumo e visualização de serviços RESTful
-* [XUnit](https://xunit.net/) - Ferramenta para testes de Unidade 
+* [XUnit](https://xunit.net/) - ferramenta para testes de Unidade 
 
 ### Orientações para baixar e executar o projeto 
 
