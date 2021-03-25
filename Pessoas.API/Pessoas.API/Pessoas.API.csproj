@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>e246d808-5902-455e-ad41-1abada82840d</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <StartupObject>Pessoas.API.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
