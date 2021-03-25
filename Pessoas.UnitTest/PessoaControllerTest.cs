@@ -1,43 +1,43 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Pessoas.API.Controllers;
 using Pessoas.Domain.Models;
-using Pessoas.Repository.Interfaces.Generic;
-using Pessoas.Service.Interfaces;
-using Pessoas.Service.Services;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using Xunit;
+using System.Threading.Tasks;
 
 namespace Pessoas.UnitTest
 {
-    public class PessoaControllerTest
+    public sealed class PessoaControllerTest
     {
-        private PessoaController _controller;
-        private IPessoaService _pessoaService;
-        private IRepository<Pessoa> _repository;
-        private Pessoa _pessoa;
+        private readonly IPessoasUnitTestService _service;
+
         public PessoaControllerTest()
         {
-            _pessoaService = new PessoaService(_repository);
-            _controller = new PessoaController(_pessoaService);
+            _service = new PessoasUnitTestService();
         }
-        [Fact]
-        public void Get_WhenCalled_ReturnsOkResult()
+
+
+        public async Task GetAsync()
         {
-            //// Act
-            //var okResult = _controller.Get();
-            //// Assert
-            //Assert.IsType<OkObjectResult>(okResult.Result);
+            await _service.GetAsync();
         }
-        [Fact]
-        public void Get_WhenCalled_ReturnsAllItems()
+
+        public async Task GetByCPFAsync()
         {
-            //// Act
-            //var okResult = _controller.Get().Result as OkObjectResult;
-            //// Assert
-            //var items = Assert.IsType<List<Pessoa>>(okResult.Value);
-            //Assert.Equal(3, items.Count);
+            await _service.GetByCPFAsync();
+        }
+
+        public async Task PostAsync()
+        {
+            await _service.PostAsync();
+        }
+
+        public async Task PutByCPFAsync()
+        {
+            await _service.PutByCPFAsync();
+        }
+
+        public async Task DeleteByCPFAsync()
+        {
+            await _service.DeleteByCPFAsync();
         }
     }
 }
