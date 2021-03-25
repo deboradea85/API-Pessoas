@@ -26,9 +26,17 @@ $ https://github.com/deboradea85/API-Pessoas/archive/refs/heads/master.zip
 ```
 Executar o projeto - Utilizando Visual Studio
 ```sh
-$ Ao abrir o Visual Studio 2019, escolher a opção Open a project or solution, caso tenha clicado em Continue without code, ou caso o Visual Studio 2019 já esteja aberto, selecionar o menu File, em seguida, selecionar a opção Open, em seguida, selecionar a opção Project/Solution
+$ Ao abrir o Visual Studio 2019, 
 
-$ Buscar o arquivo Pessoas.API.sln (..\API-Pessoas\Pessoas.API\Pessoas.API.sln)no diretório onde o projeto foi baixado, em seguida, clicar em Abrir
+$ Escolher a opção Open a project or solution, caso tenha clicado em Continue without code
+
+$ Caso o Visual Studio 2019 já esteja aberto, selecionar o menu File, em seguida, selecionar a opção Open, 
+
+$ Em seguida, selecionar a opção Project/Solution
+
+$ Buscar o arquivo Pessoas.API.sln (..\API-Pessoas\Pessoas.API\Pessoas.API.sln)no diretório onde o projeto foi baixado, 
+
+$ Em seguida, clicar em Abrir
 
 $ Clicar no Menu Debug, em seguida, clicar na opção Start Debugging 
 
@@ -42,7 +50,9 @@ $ A página inicial do Swagger será inicializada no navegador Web
 
 $ O Banco de Dados é gerado na primeira inicialização da aplicação
 
-$ A API poderá ser testada a partir da página aberta no navegador, escolhendo o método desejado e clicando em Try it Out, informando no campo version o valor 1 
+$ A API poderá ser testada a partir da página aberta no navegador, 
+
+$ Escolhendo o método desejado e clicando em Try it Out, informando no campo version o valor 1 
 
 $ Os dados ficam salvos no Banco de Dados: (localdb)\MSSQLLocalDB\Pessoas
 ```
@@ -51,5 +61,7 @@ Testes unitários
 ```sh
 $ Apesar de já existir o projeto de Testes Unitários, o mesmo ainda não foi iniciado, possui apenas uma estrutura inicial.
 
-$ Após finalização de implementação, será possível executá-lo acessando o Menu Test, em seguida Test Explorer, clicando no Botão Run All Tests In View
+$ Após finalização de implementação, será possível executá-lo acessando o Menu Test, 
+
+$ Em seguida Test Explorer, clicando no Botão Run All Tests In View
 ```
